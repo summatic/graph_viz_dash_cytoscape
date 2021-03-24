@@ -4,7 +4,6 @@ from .base import Config
 
 class DevConfig(Config):
     DEBUG = False
-    PORT = os.getenv("DASH_PORT")
     REDIS_URL = "redis://localhost:6379"
 
 

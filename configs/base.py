@@ -7,5 +7,6 @@ class Config:
     BASE_DIR = os.path.dirname(__file__)
     EXTERNAL_STYLESHEET = [dbc.themes.SPACELAB]
     PREVENT_INITIAL_CALLBACKS = True
+    PORT = os.getenv("DASH_PORT")
     SUPPRESS_CALLBACK_EXCEPTIONS = True
     URL_BASE_PATHNAME = "/"
