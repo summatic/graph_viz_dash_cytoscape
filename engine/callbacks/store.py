@@ -1,17 +1,17 @@
 import json
+
 import dash
 from dash.dependencies import Input, Output, State
-from rq.exceptions import NoSuchJobError
 
-
-from app import dash_app, conn
+from app import dash_app, conn, queue
 
 
 @dash_app.callback(
     [
         Output("search_status", "children"),
         Output("store_finished", "data"),
-        Output("cyto_interval", "disabled")
+        Output("cyto_interval", "disabled"),
+        Output("search_button_search", "disabled")
     ],
     Input("status_interval", "n_intervals"),
     State("store_submitted", "data"),
@@ -37,11 +37,14 @@ def retrieve_status_output(n_interval, submitted):
         status = job["status"]
 
         if status in ["finished", "no_input", "not_found"]:
-            return status, {"id": submitted["id"]}, False
+            return status, {"id": submitted["id"]}, False, False
+        if status == "wait":
+            order = job["order"]
+            return f"{order} jobs were queued.", None, True, True
         else:
-            return status, None, True
+            return status, None, True, True
     else:
-        return dash.no_update, None, True
+        return dash.no_update, None, True, False
 
 
 @dash_app.callback(

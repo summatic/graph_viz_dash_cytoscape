@@ -37,6 +37,7 @@ def search_github_id(job_id, github_id):
 
 
 if __name__ == "__main__":
+    print("Ready to work")
     while True:
         msg = queue.get()
         if msg is None:

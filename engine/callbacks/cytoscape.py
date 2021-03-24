@@ -19,7 +19,7 @@ def update_elements(n_interval, finished):
         fetched = conn.get(job_id)
 
         if fetched is None:
-            return dash.no_update, dash.no_update, dash.no_update
+            return dash.no_update
 
         job = json.loads(fetched.decode("utf-8"))
         result = job["result"]
